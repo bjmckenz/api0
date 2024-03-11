@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(cors())  // only this should works for every case also you can try
+//app.use(cors())  // only this should works for every case also you can try
 
 app.use(cors({
   origin: '*' // that will for all like  https / http
