@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var JSON = require('json5');
 
 const db = require('better-sqlite3')('lms.db');
 
@@ -42,17 +43,15 @@ router.get('/container/:containerNumber', function(req, res, next) {
 
 router.post('/container', function(req, res, next) {
   const newContainer = req.body;
-  console.log(newContainer);
-
 
   const stmt = db.prepare('INSERT INTO containers (containerNumber, containerSize, dateContainerShipped, nameOfShip) VALUES (?, ?, ?, ?)');
   const info = stmt.run(newContainer.containerNumber, newContainer.containerSize, newContainer.dateContainerShipped, newContainer.nameOfShip);
 
   if (info.changes !== 1) {
     res.status(400).json({error: 'Container not added'});
-    return
+    return;
   }
-  res.json({containerNumber: newContainer.containerNumber});
+  res.json({containers:[{containerNumber: newContainer.containerNumber}]});
 });
 
 module.exports = router;
